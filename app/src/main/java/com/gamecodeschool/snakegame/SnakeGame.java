@@ -228,6 +228,11 @@ class SnakeGame extends SurfaceView implements Runnable{
 
                 // Draw the message
                 mCanvas.drawText("Tap To Play!", 200, 700, mPaint);
+
+                mPaint.setColor(Color.argb(200, 0, 0, 128));
+                mPaint.setTextSize(75);
+                mCanvas.drawText("Zabi Aryan", 1905, 60, mPaint);
+                mCanvas.drawText("Trenton Suddaby", 1700, 135, mPaint);
             }
 
             // Draw the pause/resume button
