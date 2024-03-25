@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
+//fourth commit. Changing font and background color.
+import android.graphics.Typeface;
 
 class SnakeGame extends SurfaceView implements Runnable{
 
@@ -53,6 +55,9 @@ class SnakeGame extends SurfaceView implements Runnable{
     // from SnakeActivity
     public SnakeGame(Context context, Point size) {
         super(context);
+        mPaint = new Paint();
+        Typeface nunitoTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/Nunito-Regular.ttf");
+        mPaint.setTypeface(nunitoTypeface);
 
         // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
@@ -102,6 +107,7 @@ class SnakeGame extends SurfaceView implements Runnable{
                 new Point(NUM_BLOCKS_WIDE,
                         mNumBlocksHigh),
                 blockSize);
+
 
     }
 
@@ -201,11 +207,11 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 26, 128, 182));
+            mCanvas.drawColor(Color.argb(255, 255, 255, 0));
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
+            mPaint.setTextSize(150);
 
             // Draw the score
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
