@@ -215,48 +215,61 @@ class SnakeGame extends SurfaceView implements Runnable{
             mSnake.draw(mCanvas, mPaint);
 
             // Draw some text while paused
-            if(mPaused){
-
+            if (mPaused) {
                 // Set the size and color of the mPaint for the text
                 mPaint.setColor(Color.argb(255, 255, 255, 255));
                 mPaint.setTextSize(250);
 
                 // Draw the message
-                // We will give this an international upgrade soon
                 mCanvas.drawText("Tap To Play!", 200, 700, mPaint);
-                /*mCanvas.drawText(getResources().
-                                getString(R.string.tap_to_play),
-                        200, 700, mPaint);*/
             }
 
+            // Draw the pause/resume button
+            mPaint.setTextSize(50);
+            if (mPaused) {
+                mCanvas.drawText("Resume", 50, 50, mPaint);
+            } else {
+                mCanvas.drawText("Pause", 50, 50, mPaint);
+            }
 
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }
 
+
+    //2nd commit
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+        // Check if the pause/resume button is pressed
+        if (motionEvent.getX() < 200 && motionEvent.getY() < 100) {
+            // Toggle the paused state
+            mPaused = !mPaused;
+            // If the game is resumed, reset to a new game
+            if (!mPaused) {
+                newGame();
+            }
+            return true; // Indicate we've handled this event
+        }
+
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 if (mPaused) {
-                    mPaused = false;
-                    newGame();
-
-                    // Don't want to process snake direction for this tap
+                    // If the game is paused and the area outside the pause button is touched,
+                    // don't process any further to avoid unintended game state changes.
                     return true;
                 }
 
-                // Let the Snake class handle the input
+                // Let the Snake class handle the input for changing direction
                 mSnake.switchHeading(motionEvent);
                 break;
 
             default:
                 break;
-
         }
         return true;
     }
+
 
 
     // Stop the thread
