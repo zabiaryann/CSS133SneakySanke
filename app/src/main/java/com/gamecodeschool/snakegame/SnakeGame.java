@@ -110,8 +110,8 @@ class SnakeGame extends SurfaceView implements Runnable{
                 new Point(NUM_BLOCKS_WIDE,
                         mNumBlocksHigh),
                 blockSize);
-
-
+        gameObjects.add(mApple); // Dynamic polymorphism
+        gameObjects.add(mSnake); // Dynamic polymorphism
     }
 
 
@@ -199,11 +199,13 @@ class SnakeGame extends SurfaceView implements Runnable{
 
             mPaused =true;
         }
-
+        // iterate over GameObjects and call update
+        for (GameObject obj : gameObjects) {
+            obj.update();
+        }
     }
+    // Drawing method enhanced to iterate over GameObjects
 
-
-    // Do all the drawing
     public void draw() {
         // Get a lock on the mCanvas
         if (mSurfaceHolder.getSurface().isValid()) {
@@ -244,6 +246,10 @@ class SnakeGame extends SurfaceView implements Runnable{
                 mCanvas.drawText("Resume", 50, 50, mPaint);
             } else {
                 mCanvas.drawText("Pause", 50, 50, mPaint);
+            }
+            // Iterate over GameObjects to draw them
+            for (GameObject obj : gameObjects) {
+                obj.draw(mCanvas, mPaint);
             }
 
             // Unlock the mCanvas and reveal the graphics for this frame
