@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 //fourth commit. Changing font and background color.
 import android.graphics.Typeface;
 
@@ -49,6 +51,7 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Snake mSnake;
     // And an apple
     private Apple mApple;
+    private List<GameObject> gameObjects = new ArrayList<>();
 
 
     // This is the constructor method that gets called

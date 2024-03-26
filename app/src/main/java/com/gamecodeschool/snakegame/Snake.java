@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake {
+class Snake implements GameObject{
 
     // The location in the grid of all the segments
     //testing the snake class
@@ -205,8 +205,13 @@ class Snake {
         }
         return false;
     }
+    @Override
+    public void update() {
+        move(); // Call the existing move method
+    }
 
-    void draw(Canvas canvas, Paint paint) {
+    @Override
+    public void draw(Canvas canvas, Paint paint) {
 
         // Don't run this code if ArrayList has nothing in it
         if (!segmentLocations.isEmpty()) {
