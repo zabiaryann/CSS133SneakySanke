@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import java.util.Random;
 
-class Apple implements GameObject {
+class Apple implements GameObject, Consumable {
     private Point location = new Point();
     private Point mSpawnRange;
     private int mSize;
@@ -20,6 +20,16 @@ class Apple implements GameObject {
         location.x = -10;
         mBitmapApple = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple);
         mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, s, s, false);
+    }
+    @Override
+    public void consume(Snake snake) {
+        // Logic for when the snake consumes the apple...
+    }
+    // New checkCollision implementation
+    @Override
+    public boolean checkCollision(GameObject other) {
+        // Collision detection logic specific to Apple...
+        return false; // Placeholder return value
     }
 
     void spawn(){
