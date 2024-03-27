@@ -48,8 +48,17 @@ class SnakeGame extends SurfaceView implements Runnable{
     // And an apple
     private Apple mApple;
     private List<GameObject> gameObjects = new ArrayList<>();
+<<<<<<< HEAD
     private Bitmap mBitmapCanvas;
     // This is the constructor method that gets called from SnakeActivity
+=======
+
+    private Bitmap mBitmapCanvas;
+
+
+    // This is the constructor method that gets called
+    // from SnakeActivity
+>>>>>>> e544126a5eeed0d850bf4f722db670bbb8f73397
     public SnakeGame(Context context, Point size) {
         super(context);
         mPaint = new Paint();
@@ -132,7 +141,11 @@ class SnakeGame extends SurfaceView implements Runnable{
     // Check to see if it is time for an update
     public boolean updateRequired() {
         // Run at 10 frames per second
+<<<<<<< HEAD
         final long TARGET_FPS = 3;
+=======
+        final long TARGET_FPS = 5;
+>>>>>>> e544126a5eeed0d850bf4f722db670bbb8f73397
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
         // Are we due to update the frame
@@ -177,9 +190,22 @@ class SnakeGame extends SurfaceView implements Runnable{
         // Get a lock on the mCanvas
         if (mSurfaceHolder.getSurface().isValid()) {
             mCanvas = mSurfaceHolder.lockCanvas();
+<<<<<<< HEAD
             mBitmapCanvas = BitmapFactory.decodeResource(this.getResources(), R.drawable.game_background);
             mBitmapCanvas = Bitmap.createScaledBitmap(mBitmapCanvas, NUM_BLOCKS_WIDE*57, mNumBlocksHigh*57, false);
             mCanvas.drawBitmap(mBitmapCanvas, 0, 0, mPaint);
+=======
+
+            // Fill the screen with a color
+            //mCanvas.drawColor(Color.argb(255, 255, 255, 0));
+
+
+            mBitmapCanvas = BitmapFactory.decodeResource(this.getResources(), R.drawable.game_background);
+            mBitmapCanvas = Bitmap.createScaledBitmap(mBitmapCanvas, NUM_BLOCKS_WIDE*57, mNumBlocksHigh*57, false);
+            mCanvas.drawBitmap(mBitmapCanvas, 0, 0, mPaint);
+
+
+>>>>>>> e544126a5eeed0d850bf4f722db670bbb8f73397
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(150);
