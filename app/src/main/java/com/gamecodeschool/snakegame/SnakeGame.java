@@ -3,6 +3,7 @@ package com.gamecodeschool.snakegame;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,12 +12,14 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import android.graphics.BitmapFactory;
 //fourth commit. Changing font and background color.
 import android.graphics.Typeface;
 
@@ -52,6 +55,8 @@ class SnakeGame extends SurfaceView implements Runnable{
     // And an apple
     private Apple mApple;
     private List<GameObject> gameObjects = new ArrayList<>();
+
+    private Bitmap mBitmapCanvas;
 
 
     // This is the constructor method that gets called
@@ -152,7 +157,7 @@ class SnakeGame extends SurfaceView implements Runnable{
     public boolean updateRequired() {
 
         // Run at 10 frames per second
-        final long TARGET_FPS = 10;
+        final long TARGET_FPS = 5;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
@@ -212,7 +217,13 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // Fill the screen with a color
-            mCanvas.drawColor(Color.argb(255, 255, 255, 0));
+            //mCanvas.drawColor(Color.argb(255, 255, 255, 0));
+
+
+            mBitmapCanvas = BitmapFactory.decodeResource(this.getResources(), R.drawable.game_background);
+            mBitmapCanvas = Bitmap.createScaledBitmap(mBitmapCanvas, NUM_BLOCKS_WIDE*57, mNumBlocksHigh*57, false);
+            mCanvas.drawBitmap(mBitmapCanvas, 0, 0, mPaint);
+
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
@@ -243,9 +254,9 @@ class SnakeGame extends SurfaceView implements Runnable{
             // Draw the pause/resume button
             mPaint.setTextSize(50);
             if (mPaused) {
-                mCanvas.drawText("Resume", 50, 50, mPaint);
+                mCanvas.drawText("Resume", 50, 100, mPaint);
             } else {
-                mCanvas.drawText("Pause", 50, 50, mPaint);
+                mCanvas.drawText("Pause", 50, 100, mPaint);
             }
             // Iterate over GameObjects to draw them
             for (GameObject obj : gameObjects) {
