@@ -170,10 +170,6 @@ class SnakeGame extends SurfaceView implements Runnable{
             mPaused = true;
             mNewGame = true;
         }
-        // iterate over GameObjects and call update
-        /*for (GameObject obj : gameObjects) {
-            obj.update();
-        }*/
     }
     // Drawing method enhanced to iterate over GameObjects
     public void draw() {
@@ -186,11 +182,14 @@ class SnakeGame extends SurfaceView implements Runnable{
             mCanvas.drawBitmap(mBitmapCanvas, 0, 0, mPaint);
 
 
-            // Add background to code
+            // Add background to game
             mBitmapCanvas = BitmapFactory.decodeResource(this.getResources(), R.drawable.game_background);
             mBitmapCanvas = Bitmap.createScaledBitmap(mBitmapCanvas, NUM_BLOCKS_WIDE*57, mNumBlocksHigh*57, false);
             mCanvas.drawBitmap(mBitmapCanvas, 0, 0, mPaint);
 
+            //Set text font
+            Typeface nunitoTypeface = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/Nunito-Regular.ttf");
+            mPaint.setTypeface(nunitoTypeface);
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
