@@ -214,7 +214,6 @@ class SnakeGame extends SurfaceView implements Runnable{
             for (GameObject obj : gameObjects) {
                 obj.draw(mCanvas, mPaint);
             }
-
             // Draw some text while paused
             if (mPaused && mNewGame) {
                 // Set the size and color of the mPaint for the text
