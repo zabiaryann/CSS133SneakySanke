@@ -11,7 +11,7 @@ import android.graphics.Point;
 import java.util.Random;
 
 // The Apple class, which implements the GameObject and Consumable interfaces
-class Apple implements GameObject, Consumable {
+class Apple implements GameObject{
     // Private member variable to store the location of the apple. Hidden from other classes.
     private Point location = new Point();
 
@@ -32,19 +32,6 @@ class Apple implements GameObject, Consumable {
         // Loads the apple image from resources and scales it according to the size specified.
         mBitmapApple = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple);
         mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, s, s, false);
-    }
-
-    // Method defined from the Consumable interface. Contains logic when the snake consumes the apple.
-    @Override
-    public void consume(Snake snake) {
-        // Logic for when the snake consumes the apple...
-    }
-
-    // Method defined from the GameObject interface for checking collisions with other game objects.
-    @Override
-    public boolean checkCollision(GameObject other) {
-        // Collision detection logic specific to Apple...
-        return false; // Placeholder return value
     }
 
     // Public method to spawn the apple at a random location within the defined spawn range.
