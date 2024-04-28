@@ -225,6 +225,7 @@ class SnakeGame extends SurfaceView implements Runnable{
                 mPaint.setTextSize(75);
                 mCanvas.drawText("Zabi Aryan", 1905, 60, mPaint);
                 mCanvas.drawText("Trenton Suddaby", 1700, 135, mPaint);
+                mCanvas.drawText("Jaime Montanez", 1400, 200, mPaint);
             }
 
             // Unlock the mCanvas and reveal the graphics for this frame
