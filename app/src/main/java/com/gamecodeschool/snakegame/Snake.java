@@ -169,6 +169,11 @@ class Snake implements GameObject{
         }
         return false;
     }
+    boolean checkCollision(Point obstacleLocation) {
+        Point head = segmentLocations.get(0);
+        return head.equals(obstacleLocation);
+    }
+
     @Override
     public void update() {
         move(); // Call the existing move method

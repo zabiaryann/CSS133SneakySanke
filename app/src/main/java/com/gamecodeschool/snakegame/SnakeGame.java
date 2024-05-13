@@ -43,6 +43,7 @@ class SnakeGame extends SurfaceView implements Runnable {
     private Apple mApple;
     private List<GameObject> gameObjects = new ArrayList<>();
     private Bitmap mBitmapCanvas;
+    private Obstacle mObstacle;
 
     public SnakeGame(Context context, Point size) {
         super(context);
@@ -74,8 +75,10 @@ class SnakeGame extends SurfaceView implements Runnable {
         mPaint = new Paint();
         mApple = new Apple(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
         mSnake = new Snake(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
+        mObstacle = new Obstacle(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
         gameObjects.add(mApple);
         gameObjects.add(mSnake);
+        gameObjects.add(mObstacle);
         SharedPreferences prefs = context.getSharedPreferences("GamePrefs", Context.MODE_PRIVATE);
         highScore = prefs.getInt("HighScore", 0); // Load high score from SharedPreferences
     }
@@ -83,6 +86,7 @@ class SnakeGame extends SurfaceView implements Runnable {
     public void newGame() {
         mSnake.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
         mApple.spawn();
+        mObstacle.spawn(mApple.getLocation());
         mScore = 0; // Reset the score
         mNextFrameTime = System.currentTimeMillis();
     }
@@ -113,6 +117,7 @@ class SnakeGame extends SurfaceView implements Runnable {
         mSnake.move();
         if (mSnake.checkDinner(mApple.getLocation())) {
             mApple.spawn();
+            mObstacle.spawn(mApple.getLocation());
             mScore += 1;
             mSP.play(mEat_ID, 1, 1, 0, 0, 1);
             if (mScore > highScore) {
@@ -123,7 +128,7 @@ class SnakeGame extends SurfaceView implements Runnable {
                 editor.apply();
             }
         }
-        if (mSnake.detectDeath()) {
+        if (mSnake.detectDeath() || mSnake.checkCollision(mObstacle.getLocation())) {
             mSP.play(mCrashID, 1, 1, 0, 0, 1);
             mPaused = true;
             mNewGame = true;
