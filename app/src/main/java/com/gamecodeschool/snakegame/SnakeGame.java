@@ -49,8 +49,10 @@ class SnakeGame extends SurfaceView implements Runnable{
     // And an apple
     private Apple mApple;
     private List<GameObject> gameObjects = new ArrayList<>();
-
     private Bitmap mBitmapCanvas;
+    private Obstacle mObstacle;
+
+
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -100,8 +102,10 @@ class SnakeGame extends SurfaceView implements Runnable{
                 new Point(NUM_BLOCKS_WIDE,
                         mNumBlocksHigh),
                 blockSize);
+        mObstacle = new Obstacle(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
         gameObjects.add(mApple); // Dynamic polymorphism
         gameObjects.add(mSnake); // Dynamic polymorphism
+        gameObjects.add(mObstacle);
     }
     // Called to start a new game
     public void newGame() {
@@ -113,6 +117,8 @@ class SnakeGame extends SurfaceView implements Runnable{
 
         // Reset the mScore
         mScore = 0;
+
+        mObstacle.spawn(mApple.getLocation());
 
         // Setup mNextFrameTime so an update can triggered
         mNextFrameTime = System.currentTimeMillis();
@@ -158,15 +164,17 @@ class SnakeGame extends SurfaceView implements Runnable{
             // This reminds me of Edge of Tomorrow.
             // One day the apple will be ready!
             mApple.spawn();
+            mObstacle.spawn(mApple.getLocation());
             // Add to  mScore
             mScore = mScore + 1;
             // Play a sound
             mSP.play(mEat_ID, 1, 1, 0, 0, 1);
         }
         // Did the snake die?
-        if (mSnake.detectDeath()) {
+        if (mSnake.detectDeath() || mSnake.checkCollision(mObstacle.getLocation())) {
             // Pause the game ready to start again
             mSP.play(mCrashID, 1, 1, 0, 0, 1);
+            //mObstacle.spawn();
             mPaused = true;
             mNewGame = true;
         }
