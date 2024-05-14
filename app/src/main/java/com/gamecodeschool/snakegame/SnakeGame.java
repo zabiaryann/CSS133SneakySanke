@@ -44,6 +44,8 @@ class SnakeGame extends SurfaceView implements Runnable {
     private List<GameObject> gameObjects = new ArrayList<>();
     private Bitmap mBitmapCanvas;
     private Obstacle mObstacle;
+    //private List<Obstacle> obstacles = new ArrayList<>();
+
 
     public SnakeGame(Context context, Point size) {
         super(context);
@@ -147,12 +149,13 @@ class SnakeGame extends SurfaceView implements Runnable {
             mPaint.setTextSize(150);
             mCanvas.drawText("Score: " + mScore, 20, 120, mPaint);
             mCanvas.drawText("High Score: " + highScore, 20, 270, mPaint);
+            int padding = 50;
             if (!mNewGame && !mPaused) {
-                mPaint.setTextSize(50);
-                mCanvas.drawText("Pause", 200, 100, mPaint);
+                // Draw "Pause" at the bottom left with padding
+                mCanvas.drawText("Pause", 20, mCanvas.getHeight() - padding, mPaint);
             } else if (!mNewGame && mPaused) {
-                mPaint.setTextSize(50);
-                mCanvas.drawText("Resume", 200, 100, mPaint);
+                // Draw "Resume" at the bottom left with padding
+                mCanvas.drawText("Resume", 20, mCanvas.getHeight() - padding, mPaint);
             }
             for (GameObject obj : gameObjects) {
                 obj.draw(mCanvas, mPaint);
@@ -179,11 +182,11 @@ class SnakeGame extends SurfaceView implements Runnable {
                     mNewGame = false;
                     newGame();
                     return true;
-                } else if (motionEvent.getX() < 390 && motionEvent.getY() < 100 && !mPaused && motionEvent.getX() > 200) {
+                } else if (motionEvent.getX() < 300 && motionEvent.getY() > mCanvas.getHeight() - 150 && !mPaused) {
                     mPaused = true;
                     pause();
                     return true;
-                } else if (motionEvent.getX() < 390 && motionEvent.getY() < 100 && mPaused && motionEvent.getX() > 200) {
+                } else if (motionEvent.getX() < 300 && motionEvent.getY() > mCanvas.getHeight() - 150 && mPaused) {
                     mPaused = false;
                     resume();
                     return true;
