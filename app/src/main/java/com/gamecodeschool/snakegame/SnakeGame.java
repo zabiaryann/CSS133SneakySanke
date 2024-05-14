@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 
 class SnakeGame extends SurfaceView implements Runnable {
     private Thread mThread = null;
@@ -44,6 +45,7 @@ class SnakeGame extends SurfaceView implements Runnable {
     private List<GameObject> gameObjects = new ArrayList<>();
     private Bitmap mBitmapCanvas;
     private Obstacle mObstacle;
+    MediaPlayer player;
 
     public SnakeGame(Context context, Point size) {
         super(context);
@@ -71,6 +73,7 @@ class SnakeGame extends SurfaceView implements Runnable {
         } catch (IOException e) {
             // Error handling
         }
+        player = MediaPlayer.create(context, R.raw.naruto);
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
         mApple = new Apple(context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize);
@@ -89,6 +92,9 @@ class SnakeGame extends SurfaceView implements Runnable {
         mObstacle.spawn(mApple.getLocation());
         mScore = 0; // Reset the score
         mNextFrameTime = System.currentTimeMillis();
+        player.start();
+        player.setLooping(true);
+
     }
 
     @Override
@@ -129,6 +135,7 @@ class SnakeGame extends SurfaceView implements Runnable {
             }
         }
         if (mSnake.detectDeath() || mSnake.checkCollision(mObstacle.getLocation())) {
+            player.pause();
             mSP.play(mCrashID, 1, 1, 0, 0, 1);
             mPaused = true;
             mNewGame = true;
@@ -149,10 +156,10 @@ class SnakeGame extends SurfaceView implements Runnable {
             mCanvas.drawText("High Score: " + highScore, 20, 270, mPaint);
             if (!mNewGame && !mPaused) {
                 mPaint.setTextSize(50);
-                mCanvas.drawText("Pause", 200, 100, mPaint);
+                mCanvas.drawText("Pause", 2000, 100, mPaint);
             } else if (!mNewGame && mPaused) {
                 mPaint.setTextSize(50);
-                mCanvas.drawText("Resume", 200, 100, mPaint);
+                mCanvas.drawText("Resume", 2000, 100, mPaint);
             }
             for (GameObject obj : gameObjects) {
                 obj.draw(mCanvas, mPaint);
@@ -179,13 +186,15 @@ class SnakeGame extends SurfaceView implements Runnable {
                     mNewGame = false;
                     newGame();
                     return true;
-                } else if (motionEvent.getX() < 390 && motionEvent.getY() < 100 && !mPaused && motionEvent.getX() > 200) {
+                } else if (motionEvent.getX() < 2190 && motionEvent.getY() < 100 && !mPaused && motionEvent.getX() > 2000) {
                     mPaused = true;
                     pause();
+                    player.pause();
                     return true;
-                } else if (motionEvent.getX() < 390 && motionEvent.getY() < 100 && mPaused && motionEvent.getX() > 200) {
+                } else if (motionEvent.getX() < 2190 && motionEvent.getY() < 100 && mPaused && motionEvent.getX() > 2000) {
                     mPaused = false;
                     resume();
+                    player.start();
                     return true;
                 }
                 mSnake.switchHeading(motionEvent);

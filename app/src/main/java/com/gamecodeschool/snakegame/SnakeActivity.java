@@ -1,9 +1,12 @@
 package com.gamecodeschool.snakegame;
 
 import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+
 
 public class SnakeActivity extends Activity {
     // Declare an instance of SnakeGame
@@ -22,6 +25,7 @@ public class SnakeActivity extends Activity {
         // Make snakeEngine the view of the Activity
         setContentView(mSnakeGame);
     }
+
     // Start the thread in snakeEngine
     @Override
     protected void onResume() {
